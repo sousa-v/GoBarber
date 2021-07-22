@@ -1,12 +1,11 @@
 import { injectable, inject } from "tsyringe";
-import { getDaysInMonth, getDate } from "date-fns";
+import { getDaysInMonth, getDate, isAfter } from "date-fns";
 
 import IAppointmentsRepository from "../repositories/IAppointmentRepository";
 
 // import User from "@modules/users/infra/typeorm/entities/User";
 
 interface IRequest {
-  // eslint-disable-next-line camelcase
   provider_id: string;
   month: number;
   year: number;
@@ -24,9 +23,7 @@ export default class ListProviderMonthAvailabilityService {
     private appointmentsRepository: IAppointmentsRepository // eslint-disable-next-line no-empty-function
   ) {}
 
-  // eslint-disable-next-line camelcase
   public async execute({
-    // eslint-disable-next-line camelcase
     provider_id,
     year,
     month,
@@ -46,13 +43,16 @@ export default class ListProviderMonthAvailabilityService {
     );
 
     const availability = eachDayArray.map((day) => {
+      const compareDate = new Date(year, month - 1, day, 23, 59, 59);
+
       const appointmentsInDay = appointments.filter((appointment) => {
         return getDate(appointment.date) === day;
       });
 
       return {
         day,
-        available: appointmentsInDay.length < 10,
+        available:
+          isAfter(compareDate, new Date()) && appointmentsInDay.length < 10,
       };
     });
 

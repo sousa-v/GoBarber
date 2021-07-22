@@ -6,7 +6,6 @@ import IAppointmentsRepository from "../repositories/IAppointmentRepository";
 // import User from "@modules/users/infra/typeorm/entities/User";
 
 interface IRequest {
-  // eslint-disable-next-line camelcase
   provider_id: string;
   day: number;
   month: number;
@@ -25,9 +24,7 @@ export default class ListProviderDayAvailabilityService {
     private appointmentsRepository: IAppointmentsRepository // eslint-disable-next-line no-empty-function
   ) {}
 
-  // eslint-disable-next-line camelcase
   public async execute({
-    // eslint-disable-next-line camelcase
     provider_id,
     year,
     month,

@@ -21,16 +21,12 @@ class FakeUsersRepository implements IUsersRepository {
     return findUser;
   }
 
-  // eslint-disable-next-line camelcase
   public async findAllProviders({
-    // eslint-disable-next-line camelcase
     except_user_id,
   }: IFindAllProvidersDTO): Promise<User[]> {
     let { users } = this;
 
-    // eslint-disable-next-line camelcase
     if (except_user_id) {
-      // eslint-disable-next-line camelcase
       users = this.users.filter((user) => user.id !== except_user_id);
     }
 

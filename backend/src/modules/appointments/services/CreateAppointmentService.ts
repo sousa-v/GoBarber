@@ -9,9 +9,8 @@ import Appointment from "../infra/typeorm/entities/Appointment";
 import IAppointmentRepository from "../repositories/IAppointmentRepository";
 
 interface IRequest {
-  // eslint-disable-next-line camelcase
   provider_id: string;
-  // eslint-disable-next-line camelcase
+
   user_id: string;
   date: Date;
 }
@@ -29,12 +28,11 @@ class CreateAppointmentService {
     private cacheProvider: ICacheProvider // eslint-disable-next-line no-empty-function
   ) {}
 
-  // eslint-disable-next-line camelcase
   public async execute({
     date,
-    // eslint-disable-next-line camelcase
+
     provider_id,
-    // eslint-disable-next-line camelcase
+
     user_id,
   }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
@@ -43,7 +41,6 @@ class CreateAppointmentService {
       throw new AppError("You can't create an appointment on a past date.");
     }
 
-    // eslint-disable-next-line camelcase
     if (user_id === provider_id) {
       throw new AppError("You can't create an appointment with yourself");
     }
@@ -55,7 +52,10 @@ class CreateAppointmentService {
     }
 
     const findAppointmentInSameDate =
-      await this.appointmentsRepository.findByDate(appointmentDate);
+      await this.appointmentsRepository.findByDate(
+        appointmentDate,
+        provider_id
+      );
 
     if (findAppointmentInSameDate) {
       throw new AppError("this appointment is already booked");
@@ -75,7 +75,6 @@ class CreateAppointmentService {
     });
 
     await this.cacheProvider.invalidate(
-      // eslint-disable-next-line camelcase
       `provider-appointments:${provider_id}:${format(
         appointmentDate,
         "yyyy-M-d"

@@ -22,7 +22,7 @@ export default class SendForgotPasswordEmailService {
     private mailProvider: IMailProvider,
 
     @inject("UserTokensRepository")
-    private userTokensRepository: IUserTokensRepository // eslint-disable-next-line no-empty-function
+    private userTokensRepository: IUserTokensRepository
   ) {}
 
   public async execute({ email }: IRequest): Promise<void> {
@@ -51,7 +51,7 @@ export default class SendForgotPasswordEmailService {
         file: forgotPasswordTemplate,
         variables: {
           name: user.name,
-          link: `${process.env.APP_WEB_URL}/reset_password?token=${token}`,
+          link: `${process.env.APP_WEB_URL}/reset-password?token=${token}`,
         },
       },
     });

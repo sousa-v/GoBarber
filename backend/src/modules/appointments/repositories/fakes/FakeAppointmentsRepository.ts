@@ -11,23 +11,27 @@ import Appointment from "../../infra/typeorm/entities/Appointment";
 class AppointmentsRepository implements IAppointmentsRepository {
   private appointments: Appointment[] = [];
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
-    const findAppointment = this.appointments.find((appointment) =>
-      isEqual(appointment.date, date)
+  public async findByDate(
+    date: Date,
+
+    provider_id: string
+  ): Promise<Appointment | undefined> {
+    const findAppointment = this.appointments.find(
+      (appointment) =>
+        isEqual(appointment.date, date) &&
+        appointment.provider_id === provider_id
     );
 
     return findAppointment;
   }
 
   public async findAllInMonthFromProvider({
-    // eslint-disable-next-line camelcase
     provider_id,
     month,
     year,
   }: IFindAllInMonthFromProviderDTO): Promise<Appointment[]> {
     const appointments = this.appointments.filter((appointment) => {
       return (
-        // eslint-disable-next-line camelcase
         appointment.provider_id === provider_id &&
         getMonth(appointment.date) + 1 === month &&
         getYear(appointment.date) === year
@@ -38,7 +42,6 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 
   public async findAllInDayFromProvider({
-    // eslint-disable-next-line camelcase
     provider_id,
     day,
     month,
@@ -46,7 +49,6 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }: IFindAllInDayFromProviderDTO): Promise<Appointment[]> {
     const appointments = this.appointments.filter((appointment) => {
       return (
-        // eslint-disable-next-line camelcase
         appointment.provider_id === provider_id &&
         getDate(appointment.date) === day &&
         getMonth(appointment.date) + 1 === month &&
@@ -58,9 +60,8 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 
   public async create({
-    // eslint-disable-next-line camelcase
     provider_id,
-    // eslint-disable-next-line camelcase
+
     user_id,
     date,
   }: ICreateAppointmentDTO): Promise<Appointment> {

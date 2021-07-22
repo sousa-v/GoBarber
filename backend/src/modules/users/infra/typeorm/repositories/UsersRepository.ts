@@ -27,13 +27,11 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  // eslint-disable-next-line camelcase
   public async findAllProviders({
-    // eslint-disable-next-line camelcase
     except_user_id,
   }: IFindAllProvidersDTO): Promise<User[]> {
     let users: User[];
-    // eslint-disable-next-line camelcase
+
     if (except_user_id) {
       users = await this.ormRepository.find({
         where: {

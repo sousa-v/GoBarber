@@ -12,7 +12,6 @@ export default class NotificationsRepository
 
   public async create({
     content,
-    // eslint-disable-next-line camelcase
     recipient_id,
   }: ICreateNotificationDTO): Promise<Notification> {
     const notification = new Notification();

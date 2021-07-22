@@ -23,7 +23,7 @@ class CreateUserService {
     private hashProvider: IHashProvider,
 
     @inject("CacheProvider")
-    private cacheProvider: ICacheProvider // eslint-disable-next-line no-empty-function
+    private cacheProvider: ICacheProvider
   ) {}
 
   public async execute({ name, email, password }: IRequest): Promise<User> {

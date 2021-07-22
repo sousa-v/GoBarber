@@ -15,10 +15,10 @@ interface IRequest {
 class UpdateUserAvatarService {
   constructor(
     @inject("UsersRepository")
-    private usersRepository: IUsersRepository, // eslint-disable-next-line no-empty-function
+    private usersRepository: IUsersRepository,
 
     @inject("StorageProvider")
-    private storageProvider: IStorageProvider // eslint-disable-next-line no-empty-function
+    private storageProvider: IStorageProvider
   ) {}
 
   public async execute({ userId, avatarFilename }: IRequest): Promise<User> {

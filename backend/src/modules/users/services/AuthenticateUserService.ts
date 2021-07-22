@@ -24,7 +24,7 @@ class AuthenticateUserService {
     private usersRepository: IUsersRepository,
 
     @inject("HashProvider")
-    private hashProvider: IHashProvider // eslint-disable-next-line no-empty-function
+    private hashProvider: IHashProvider
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {

@@ -5,11 +5,10 @@ import IHashProvider from "@modules/users/providers/HashProvider/models/IHashPro
 import IUsersRepository from "../repositories/IUsersRepository";
 
 interface IRequest {
-  // eslint-disable-next-line camelcase
   user_id: string;
   name: string;
   email: string;
-  // eslint-disable-next-line camelcase
+
   old_password?: string;
   password?: string;
 }
@@ -21,15 +20,14 @@ class UpdateProfileService {
     private usersRepository: IUsersRepository,
 
     @inject("HashProvider")
-    private hashProvider: IHashProvider // eslint-disable-next-line no-empty-function
+    private hashProvider: IHashProvider
   ) {}
 
   public async execute({
-    // eslint-disable-next-line camelcase
     user_id,
     name,
     email,
-    // eslint-disable-next-line camelcase
+
     old_password,
     password,
   }: IRequest): Promise<User> {
@@ -40,7 +38,6 @@ class UpdateProfileService {
 
     const userWithUpdatedEmail = await this.usersRepository.findByEmail(email);
 
-    // eslint-disable-next-line camelcase
     if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
       throw new AppError("Already have a user with this email");
     }
@@ -48,14 +45,12 @@ class UpdateProfileService {
     user.name = name;
     user.email = email;
 
-    // eslint-disable-next-line camelcase
     if (password && !old_password) {
       throw new AppError(
         "You need to inform the old password to set a new password"
       );
     }
 
-    // eslint-disable-next-line camelcase
     if (password && old_password) {
       const checkOldPassword = await this.hashProvider.compareHash(
         old_password,

@@ -14,16 +14,18 @@ class AppointmentsRepository implements IAppointmentsRepository {
     this.ormRepository = getRepository(Appointment);
   }
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(
+    date: Date,
+    provider_id: string
+  ): Promise<Appointment | undefined> {
     const findAppointment = await this.ormRepository.findOne({
-      where: { date },
+      where: { date, provider_id },
     });
 
     return findAppointment;
   }
 
   public async findAllInMonthFromProvider({
-    // eslint-disable-next-line camelcase
     provider_id,
     month,
     year,
@@ -43,7 +45,6 @@ class AppointmentsRepository implements IAppointmentsRepository {
   }
 
   public async findAllInDayFromProvider({
-    // eslint-disable-next-line camelcase
     provider_id,
     day,
     month,
@@ -60,14 +61,14 @@ class AppointmentsRepository implements IAppointmentsRepository {
             `to_char(${dateFieldName}, 'DD-MM-YYYY') = '${parsedDay}-${parsedMonth}-${year}'`
         ),
       },
+      relations: ["user"],
     });
     return appointments;
   }
 
   public async create({
-    // eslint-disable-next-line camelcase
     provider_id,
-    // eslint-disable-next-line camelcase
+
     user_id,
     date,
   }: ICreateAppointmentDTO): Promise<Appointment> {

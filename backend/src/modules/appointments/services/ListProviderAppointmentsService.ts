@@ -1,13 +1,13 @@
 import { injectable, inject } from "tsyringe";
 
 import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
+import { classToClass } from "class-transformer";
 import Appointment from "../infra/typeorm/entities/Appointment";
 import IAppointmentsRepository from "../repositories/IAppointmentRepository";
 
 // import User from "@modules/users/infra/typeorm/entities/User";
 
 interface IRequest {
-  // eslint-disable-next-line camelcase
   provider_id: string;
   day: number;
   month: number;
@@ -24,15 +24,12 @@ export default class ListProviderAppointmentService {
     private cacheProvider: ICacheProvider // eslint-disable-next-line no-empty-function
   ) {}
 
-  // eslint-disable-next-line camelcase
   public async execute({
-    // eslint-disable-next-line camelcase
     provider_id,
     year,
     month,
     day,
   }: IRequest): Promise<Appointment[]> {
-    // eslint-disable-next-line camelcase
     const cacheKey = `provider-appointments:${provider_id}:${year}-${month}-${day}`;
 
     let appointments = await this.cacheProvider.recover<Appointment[]>(
@@ -49,7 +46,7 @@ export default class ListProviderAppointmentService {
         }
       );
       console.log("Buscou do banco");
-      await this.cacheProvider.save(cacheKey, appointments);
+      await this.cacheProvider.save(cacheKey, classToClass(appointments));
     }
 
     return appointments;

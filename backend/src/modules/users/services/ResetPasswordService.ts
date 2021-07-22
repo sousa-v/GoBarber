@@ -23,7 +23,7 @@ class ResetPasswordService {
     private userTokensRepository: IUserTokensRepository,
 
     @inject("HashProvider")
-    private hashProvider: IHashProvider // eslint-disable-next-line no-empty-function
+    private hashProvider: IHashProvider
   ) {}
 
   public async execute({ token, password }: IRequest): Promise<void> {

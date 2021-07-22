@@ -20,6 +20,8 @@
   ],
   "rules": {
     "prettier/prettier": "error",
+    "camelcase": "off",
+    "no-empty-function":"off",
     "class-methods-use-this":"off",
     "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/no-empty-function":["error", { "allow": ["constructors"] }],

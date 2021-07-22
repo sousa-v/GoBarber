@@ -7,7 +7,6 @@ import ShowProfileService from "@modules/users/services/ShowProfileService";
 
 export default class ProfileController {
   public async show(request: Request, response: Response): Promise<Response> {
-    // eslint-disable-next-line camelcase
     const user_id = request.user.id;
 
     const showProfile = container.resolve(ShowProfileService);
@@ -18,9 +17,8 @@ export default class ProfileController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    // eslint-disable-next-line camelcase
     const user_id = request.user.id;
-    // eslint-disable-next-line camelcase
+
     const { name, email, old_password, password } = request.body;
 
     const updateProfile = container.resolve(UpdateProfileService);

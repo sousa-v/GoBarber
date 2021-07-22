@@ -5,7 +5,6 @@ import ListProvidersService from "@modules/appointments/services/ListProvidersSe
 
 export default class ProvidersController {
   public async index(request: Request, response: Response): Promise<Response> {
-    // eslint-disable-next-line camelcase
     const user_id = request.user.id;
 
     const listProviders = container.resolve(ListProvidersService);
