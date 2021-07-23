@@ -23,6 +23,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "import/no-duplicates":"off",
     "prettier/prettier": "error",
     "react-hooks/rules-of-hooks": "error",
     "react/jsx-props-no-spreading": "off",
